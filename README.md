@@ -59,18 +59,6 @@ Certificate verification defaults to off because the 8311 web UI commonly uses a
 
 The integration stores the configured base URL as the unique device identifier. If you later move the ONU to another management IP, remove and re-add the integration.
 
-## HACS Repository Requirements
-
-This repository is structured as a HACS integration repository:
-
-- `hacs.json` exists at the repository root.
-- Exactly one integration exists under `custom_components/8311_metrics`.
-- `manifest.json` includes the required custom-integration metadata.
-- A brand icon exists under `custom_components/8311_metrics/brand/icon.png`.
-- English translation strings exist under `custom_components/8311_metrics/translations/en.json`.
-
-Before submitting this repository as a HACS default repository, configure the GitHub repository description and topics. Suggested topics: `home-assistant`, `hacs`, `8311`, `was-110`, `xgs-pon`, `monitoring`.
-
 ## Development Container
 
 Run local helper tests through `uv`:
