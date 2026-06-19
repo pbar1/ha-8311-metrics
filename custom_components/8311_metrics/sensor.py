@@ -125,7 +125,7 @@ class MetricsSensor(CoordinatorEntity[MetricsCoordinator], SensorEntity):
         self._attr_device_info = {
             "identifiers": {(DOMAIN, device_id)},
             "manufacturer": "8311 Community",
-            "model": "Unauthenticated metrics endpoint",
+            "model": "Metrics endpoint",
             "name": entry.title,
         }
 
