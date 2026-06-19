@@ -1,0 +1,35 @@
+{
+  "title": "8311 Metrics",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to 8311 metrics",
+        "description": "Poll the unauthenticated metrics endpoint. This integration only performs read-only HTTP GET requests.",
+        "data": {
+          "host": "Host or base URL",
+          "verify_ssl": "Verify SSL certificate",
+          "scan_interval": "Scan interval in seconds"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to connect to the metrics endpoint.",
+      "invalid_response": "The endpoint did not return recognized 8311 metrics JSON.",
+      "unknown": "Unexpected error."
+    },
+    "abort": {
+      "already_configured": "This metrics endpoint is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "8311 Metrics options",
+        "data": {
+          "verify_ssl": "Verify SSL certificate",
+          "scan_interval": "Scan interval in seconds"
+        }
+      }
+    }
+  }
+}

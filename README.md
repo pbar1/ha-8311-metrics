@@ -1,0 +1,78 @@
+# 8311 Metrics
+
+Minimal Home Assistant custom integration for the unauthenticated 8311 firmware metrics endpoint on WAS-110 and compatible ONUs.
+
+This integration polls only:
+
+```text
+GET /cgi-bin/luci/8311/metrics
+```
+
+It does not use SSH, MQTT, shell commands, or any write-capable WAS-110 API.
+
+## Requirements
+
+- 8311 WAS-110 firmware `2.8.2` or newer
+- Home Assistant `2024.6.0` or newer
+- Network reachability from Home Assistant to the ONU management IP
+
+## Sensors
+
+- PLOAM state
+- RX optical power
+- TX optical power
+- CPU1 temperature
+- CPU2 temperature
+- Optic temperature
+- TX bias current
+- Module voltage
+
+## Configuration
+
+Add the integration from Home Assistant's UI and provide:
+
+- Host or base URL, for example `192.168.11.1` or `https://192.168.11.1`
+- Scan interval in seconds
+- Whether to verify the HTTPS certificate
+
+Certificate verification defaults to off because the 8311 web UI commonly uses a self-signed certificate.
+
+## Development Container
+
+Run local helper tests through `uv`:
+
+```sh
+scripts/test.sh
+```
+
+This runs `compileall` and the stdlib `unittest` suite in a `uv`-managed environment.
+
+Use the repeatable Podman dev environment to run an isolated Home Assistant instance with a mock metrics endpoint:
+
+```sh
+scripts/ha_dev.sh start
+```
+
+This starts:
+
+- Home Assistant at `http://127.0.0.1:8311`
+- A mock endpoint at `http://ha8311metrics-mock:8000/cgi-bin/luci/8311/metrics` inside the private Podman network
+
+The Home Assistant container mounts only this repository's `custom_components` directory and a generated `.ha-dev/config` directory. It does not mount or read any real Home Assistant configuration.
+
+Run the container validation:
+
+```sh
+scripts/ha_dev.sh validate
+```
+
+Useful commands:
+
+```sh
+scripts/ha_dev.sh status
+scripts/ha_dev.sh logs
+scripts/ha_dev.sh stop
+scripts/ha_dev.sh clean
+```
+
+`stop` preserves `.ha-dev/config`. `clean` removes the dev containers, network, and generated isolated config.

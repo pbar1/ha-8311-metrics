@@ -1,0 +1,9 @@
+[project]
+name = "8311-metrics"
+version = "0.1.0"
+description = "Home Assistant custom integration for the 8311 unauthenticated metrics endpoint."
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.uv]
+package = false
