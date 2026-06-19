@@ -11,7 +11,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .api import MetricsApiClient, MetricsError, normalize_base_url
-from .const import CONF_VERIFY_SSL, DEFAULT_SCAN_INTERVAL, DEFAULT_VERIFY_SSL, DOMAIN, LOGGER
+from .const import CONF_VERIFY_SSL, DEFAULT_HOST, DEFAULT_SCAN_INTERVAL, DEFAULT_VERIFY_SSL, DOMAIN, LOGGER
 
 PLATFORMS: list[Platform] = [Platform.SENSOR]
 
@@ -46,9 +46,9 @@ class MetricsCoordinator(DataUpdateCoordinator[dict[str, float | int | None]]):
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up 8311 Metrics from a config entry."""
     data = {**entry.data, **entry.options}
-    base_url = normalize_base_url(data[CONF_HOST])
-    verify_ssl = data.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL)
-    scan_interval = data.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
+    base_url = normalize_base_url(data.get(CONF_HOST) or DEFAULT_HOST)
+    verify_ssl = bool(data.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL))
+    scan_interval = int(data.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL))
 
     session = async_get_clientsession(hass, verify_ssl=verify_ssl)
     client = MetricsApiClient(session, base_url)

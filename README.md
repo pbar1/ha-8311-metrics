@@ -55,6 +55,12 @@ Add the integration from Home Assistant's UI and provide:
 - Scan interval in seconds
 - Whether to verify the HTTPS certificate
 
+All fields are optional. Defaults are:
+
+- Host: `192.168.11.1`
+- Scan interval: `60` seconds
+- Verify SSL certificate: disabled
+
 Certificate verification defaults to off because the 8311 web UI commonly uses a self-signed certificate.
 
 The integration stores the configured base URL as the unique device identifier. If you later move the ONU to another management IP, remove and re-add the integration.

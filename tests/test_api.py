@@ -37,6 +37,7 @@ def _load_api_module():
 
 
 api = _load_api_module()
+const = importlib.import_module("custom_components.8311_metrics.const")
 
 
 class TestApiHelpers(unittest.TestCase):
@@ -45,6 +46,12 @@ class TestApiHelpers(unittest.TestCase):
     def test_normalize_base_url_defaults_to_https(self) -> None:
         """Host names become HTTPS base URLs."""
         self.assertEqual(api.normalize_base_url("192.168.11.1"), "https://192.168.11.1")
+
+    def test_defaults_match_expected_no_input_config(self) -> None:
+        """Config defaults allow setup without user-provided values."""
+        self.assertEqual(const.DEFAULT_HOST, "192.168.11.1")
+        self.assertEqual(const.DEFAULT_SCAN_INTERVAL, 60)
+        self.assertFalse(const.DEFAULT_VERIFY_SSL)
 
     def test_parse_metrics_uses_numeric_endpoint_shape(self) -> None:
         """Known numeric metrics are parsed from the endpoint shape."""

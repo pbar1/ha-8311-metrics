@@ -16,11 +16,20 @@ from .const import CONF_VERIFY_SSL, DEFAULT_HOST, DEFAULT_SCAN_INTERVAL, DEFAULT
 
 async def _validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str, str]:
     """Validate user input by fetching one metrics sample."""
-    base_url = normalize_base_url(data[CONF_HOST])
-    session = async_get_clientsession(hass, verify_ssl=data[CONF_VERIFY_SSL])
+    base_url = normalize_base_url(data.get(CONF_HOST) or DEFAULT_HOST)
+    session = async_get_clientsession(hass, verify_ssl=bool(data.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL)))
     client = MetricsApiClient(session, base_url)
     await client.async_get_metrics()
     return {"title": f"8311 Metrics ({base_url})", "unique_id": base_url}
+
+
+def _entry_data(user_input: dict[str, Any], base_url: str) -> dict[str, Any]:
+    """Return config entry data with all defaults materialized."""
+    return {
+        CONF_HOST: base_url,
+        CONF_VERIFY_SSL: bool(user_input.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL)),
+        CONF_SCAN_INTERVAL: int(user_input.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)),
+    }
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -50,14 +59,13 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             else:
                 await self.async_set_unique_id(info["unique_id"])
                 self._abort_if_unique_id_configured()
-                user_input[CONF_HOST] = info["unique_id"]
-                return self.async_create_entry(title=info["title"], data=user_input)
+                return self.async_create_entry(title=info["title"], data=_entry_data(user_input, info["unique_id"]))
 
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema(
                 {
-                    vol.Required(CONF_HOST, default=DEFAULT_HOST): str,
+                    vol.Optional(CONF_HOST, default=DEFAULT_HOST): str,
                     vol.Optional(CONF_VERIFY_SSL, default=DEFAULT_VERIFY_SSL): bool,
                     vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): vol.All(
                         vol.Coerce(int), vol.Range(min=5, max=3600)
