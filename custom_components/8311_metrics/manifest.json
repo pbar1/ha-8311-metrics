@@ -1,12 +1,12 @@
 {
   "domain": "8311_metrics",
   "name": "8311 Metrics",
-  "codeowners": ["@pierce"],
+  "codeowners": ["@pbar1"],
   "config_flow": true,
-  "documentation": "https://github.com/pierce/was-110",
+  "documentation": "https://github.com/pbar1/ha-8311-metrics",
   "integration_type": "device",
   "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/pierce/was-110/issues",
+  "issue_tracker": "https://github.com/pbar1/ha-8311-metrics/issues",
   "requirements": [],
   "version": "0.1.0"
 }

@@ -10,6 +10,26 @@ GET /cgi-bin/luci/8311/metrics
 
 It does not use SSH, MQTT, shell commands, or any write-capable WAS-110 API.
 
+## Installation
+
+### HACS Custom Repository
+
+1. Open HACS in Home Assistant.
+2. Open the three-dot menu and choose **Custom repositories**.
+3. Add `https://github.com/pbar1/ha-8311-metrics`.
+4. Select repository type **Integration**.
+5. Install **8311 Metrics**.
+6. Restart Home Assistant.
+7. Go to **Settings** -> **Devices & services** -> **Add integration**.
+8. Search for **8311 Metrics** and configure it.
+
+### Manual Install
+
+1. Copy `custom_components/8311_metrics` into your Home Assistant config directory under `custom_components/8311_metrics`.
+2. Restart Home Assistant.
+3. Go to **Settings** -> **Devices & services** -> **Add integration**.
+4. Search for **8311 Metrics** and configure it.
+
 ## Requirements
 
 - 8311 WAS-110 firmware `2.8.2` or newer
@@ -31,11 +51,25 @@ It does not use SSH, MQTT, shell commands, or any write-capable WAS-110 API.
 
 Add the integration from Home Assistant's UI and provide:
 
-- Host or base URL, for example `192.168.11.1` or `https://192.168.11.1`
+- Host or base URL, for example `192.168.11.1`, `https://192.168.11.1`, or `http://192.168.11.1`
 - Scan interval in seconds
 - Whether to verify the HTTPS certificate
 
 Certificate verification defaults to off because the 8311 web UI commonly uses a self-signed certificate.
+
+The integration stores the configured base URL as the unique device identifier. If you later move the ONU to another management IP, remove and re-add the integration.
+
+## HACS Repository Requirements
+
+This repository is structured as a HACS integration repository:
+
+- `hacs.json` exists at the repository root.
+- Exactly one integration exists under `custom_components/8311_metrics`.
+- `manifest.json` includes the required custom-integration metadata.
+- A brand icon exists under `custom_components/8311_metrics/brand/icon.png`.
+- English translation strings exist under `custom_components/8311_metrics/translations/en.json`.
+
+Before submitting this repository as a HACS default repository, configure the GitHub repository description and topics. Suggested topics: `home-assistant`, `hacs`, `8311`, `was-110`, `xgs-pon`, `monitoring`.
 
 ## Development Container
 

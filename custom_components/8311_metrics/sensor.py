@@ -119,10 +119,11 @@ class MetricsSensor(CoordinatorEntity[MetricsCoordinator], SensorEntity):
     ) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
+        device_id = entry.unique_id or entry.entry_id
         self.entity_description = description
-        self._attr_unique_id = f"{entry.entry_id}_{description.key}"
+        self._attr_unique_id = f"{device_id}_{description.key}"
         self._attr_device_info = {
-            "identifiers": {(DOMAIN, entry.entry_id)},
+            "identifiers": {(DOMAIN, device_id)},
             "manufacturer": "8311 Community",
             "model": "Unauthenticated metrics endpoint",
             "name": entry.title,
