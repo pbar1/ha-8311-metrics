@@ -12,16 +12,13 @@ It does not use SSH, MQTT, shell commands, or any write-capable WAS-110 API.
 
 ## Installation
 
-### HACS Custom Repository
+### HACS
 
-1. Open HACS in Home Assistant.
-2. Open the three-dot menu and choose **Custom repositories**.
-3. Add `https://github.com/pbar1/ha-8311-metrics`.
-4. Select repository type **Integration**.
-5. Install **8311 Metrics**.
-6. Restart Home Assistant.
-7. Go to **Settings** -> **Devices & services** -> **Add integration**.
-8. Search for **8311 Metrics** and configure it.
+[![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=pbar1&repository=ha-8311-metrics&category=integration)
+
+Install the integration from HACS, restart Home Assistant, then add the integration:
+
+[![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=8311_metrics)
 
 ### Manual Install
 
